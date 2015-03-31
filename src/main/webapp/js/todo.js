@@ -16,7 +16,7 @@ var theTask = function(text, done) {
 };
 
 var appState = {
-	mainUrl : 'http://localhost:1555/todos',
+	mainUrl : 'todos',
 	taskList:[],
 	token : 'TE11EN'
 };
