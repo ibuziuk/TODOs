@@ -6,9 +6,9 @@ public class Task {
 	private boolean done;
 
 	public Task(String id, String description, boolean done) {
-		this.setId(id);
-		this.setDescription(description);
-		this.setDone(done);
+		this.id = id;
+		this.description = description;
+		this.done = done;
 	}
 
 	public String getId() {
