@@ -9,7 +9,6 @@ import static org.exadel.todos.util.TaskUtil.stringToJson;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,14 +48,14 @@ public class TaskServlet extends HttpServlet {
 			out.print(tasks);
 			out.flush();
 		} else {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "'token' parameter needed");
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("doPost");
-		String data = ServletUtil.getBody(request);
+		String data = ServletUtil.getMessageBody(request);
 		logger.info(data);
 		try {
 			JSONObject json = stringToJson(data);
@@ -72,7 +71,7 @@ public class TaskServlet extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.info("doPut");
-		String data = ServletUtil.getBody(request);
+		String data = ServletUtil.getMessageBody(request);
 		logger.info(data);
 		try {
 			JSONObject json = stringToJson(data);
@@ -84,7 +83,7 @@ public class TaskServlet extends HttpServlet {
 				taskToUpdate.setDone(task.isDone());
 				response.setStatus(HttpServletResponse.SC_OK);
 			} else {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Task does not exist");
 			}
 		} catch (ParseException e) {
 			logger.error(e);
@@ -94,12 +93,9 @@ public class TaskServlet extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
 	private String formResponse(int index) {
-		List<Task> chunk = TaskStorage.getSubTasksByIndex(index);
 		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(TASKS, chunk);
+		jsonObject.put(TASKS, TaskStorage.getSubTasksByIndex(index));
 		jsonObject.put(TOKEN, getToken(TaskStorage.getSize()));
-
 		return jsonObject.toJSONString();
 	}
 
@@ -107,7 +103,8 @@ public class TaskServlet extends HttpServlet {
 		Task[] stubTasks = { 
 				new Task("1", "Create markup", true), 
 				new Task("2", "Learn JavaScript", true),
-				new Task("3", "Write The Chat !", false) };
+				new Task("3", "Learn Java Servlet Technology", false),
+				new Task("4", "Write The Chat !", false), };
 		TaskStorage.addAll(stubTasks);
 	}
 

@@ -16,17 +16,13 @@
         
         git clone git@github.com:ibuziuk/TODOs.git
         
-2. Buid the project via maven
+2. Import the project to IDE
         
-        mvn clean package
+3. Add Tomcat Server to IDE
         
-3. Import the project to IDE
-        
-4. Add Tomcat Server to IDE
-        
-5. Run the project on Tomcat Server from IDE
+4. Run the project on Tomcat Server from IDE
 
-6. Open `http://localhost:8080/TODOs/` in browser
+5. Open `http://localhost:8080/TODOs/` in browser
 
 
 ## How run the project without IDE?
