@@ -8,11 +8,12 @@ import java.io.InputStreamReader;
 import javax.servlet.http.HttpServletRequest;
 
 public final class ServletUtil {
+	public static final String APPLICATION_JSON = "application/json";
 
 	private ServletUtil() {
 	}
 
-	public static String getData(HttpServletRequest request) throws IOException {
+	public static String getBody(HttpServletRequest request) throws IOException {
 		StringBuilder stringBuilder = new StringBuilder("");
 		BufferedReader bufferedReader = null;
 
